@@ -1,0 +1,47 @@
+/login -POST 
+prijma: JSON{"name","password":"xxx"}
+vracia: 200 OK {"name","token":"xx"} 
+	401 - wrong conditionals
+
+/logout -POST
+prijma: JSON{"name","token"}
+vracia: 200 - logged out 
+	401 - wrong conditionals
+
+/userinfo -POST 
+prijma: JSON{"name","token"}
+vracia: 200 - JSON {"FirstName","LastName","Mail","ID"}
+	401 - wrong conditionals
+
+/accounts -POST 
+prijma: JSON{"name","ID","token"}
+vracia: 200 - JSON [{"accNum"}] 
+	401 - wrong conditionals
+
+/accInfo -POST 
+prijma: JSON{"name","token","accNum"}
+vracia: 200 - JSON{"id","amount"}
+	401 - wrong conditionals
+
+/transHistory -POST 
+prijma: JSON{"name","idAcc"}
+vracia: 200 - JSON{"transAmount","idcAccount","token"}
+	401 - wrong conditionals
+
+/cards -POST
+prijma: JSON{"name","idAcc","token"}
+vracia: 200 - JSON {"id"}
+	401 - wrong conditionals
+
+/cardinfo - POST 
+prijma: JSON{"user","token","idCard"}
+vracia: 200 -JSON{"active","expireM","expireY"}
+	401 - wrong conditionals
+
+/cardTrans -POST 
+prijma: JSON{"name","token","idCondaèo"}
+vracia: 200 -JSON{"transamount","transDate"}
+	401 - wrong conditionals
+
+
+
