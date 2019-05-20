@@ -1,0 +1,14 @@
+login	- username   
+	- password
+	- token
+	- captcha
+	
+cislo uctu, token - mnozstvo penazi 
+		  - prevod kto, kde, kolko
+
+zmena heslo - token, stare heslo, nove heslo
+
+odhlasenie - zrus token, storage, server premenna
+
+transakcie
+	
