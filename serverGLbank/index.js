@@ -14,6 +14,8 @@ const cards = require('./models/cards');
 const cardInfo = require('./models/cardInfo');
 const cardTrans = require('./models/cardTrans');
 
+let LoggedIn = new Array();
+
 database.authenticate()
     .then(() => console.log("Database started."))
     .catch(err => console.log("Error: " + err))
@@ -37,13 +39,23 @@ app.post('/login', (req, res) => {
             obj.client = client,
             obj.token = uid
             res.status(200).send(obj);
+
+            let logIn = new Object();
+            logIn.name = req.body.name,
+            logIn.token = uid,
+            LoggedIn.push(logIn);
         });
     })
     .catch(err => console.log(err));
 });
 
 ///////////////////////////////////// LOG OUT ///////////////////////////////////////
-app.post('/logout', (req, res) => {    
+app.post('/logout', (req, res) => { 
+    LoggedIn.forEach((client) => {
+        if(client.token == req.body.token) {
+            LoggedIn.filter(client);
+        }
+    });
     res.status(200).send("Log out");
 });
 
