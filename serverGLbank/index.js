@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const UIDGenerator = require('uid-generator');
+const uidgen = new UIDGenerator();
+
 const database = require('./database');
 
 const account = require('./models/accounts');
@@ -28,7 +31,13 @@ app.post('/login', (req, res) => {
         }
     })
     .then(client => {
-        res.status(200).send(client);
+        uidgen.generate()
+        .then(uid => {
+            let obj = new Object();
+            obj.client = client,
+            obj.token = uid
+            res.status(200).send(obj);
+        });
     })
     .catch(err => console.log(err));
 });
