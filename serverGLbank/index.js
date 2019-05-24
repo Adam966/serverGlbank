@@ -24,6 +24,11 @@ const app = express();
 app.use(bodyParser.json()) 
 const PORT = 8081;
 
+/////////////////////////////////////// CHECK LOGIN ///////////////////////////////////////
+const checkLogin = (req) => {
+    LoggedIn.forEach(({name, token}) => console.log(type + ' ' + token))
+};
+
 /////////////////////////////////////// LOGIN ///////////////////////////////////////
 app.post('/login', (req, res) => {    
         client.findAll({
@@ -60,13 +65,14 @@ app.post('/logout', (req, res) => {
 });
 
 /////////////////////////////////////// ACCOUNTS ///////////////////////////////////////
-app.post('/accounts', (req, res) => {    
+app.get('/accounts', (req, res) => {    
     account.findAll({
     where: {
         idclient: req.body.id,
-    }
+    },
 })
 .then(account => {
+    LoggedIn.forEach(({name, token}) => console.dir(name + ' ' + token))
     res.status(200).send(account);
 })
 .catch(err => console.log(err));
