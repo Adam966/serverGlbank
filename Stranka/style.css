@@ -1,0 +1,187 @@
+body {    
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: -24px;
+}
+
+.upper_tab {    
+    position: absolute;
+    width: 100%;
+    height: 120px;
+    left: 0px;
+    top: -25px;
+    background: #F77545;
+}
+
+.upper_login_tab {
+    position: absolute;
+    width: 305px;
+    height: 214px;
+    left: 567px;
+    top: 152px;
+    background: #F77545;
+}
+
+.bottom_login_tab {
+    position: absolute;
+    width: 306px;
+    height: 384px;
+    left: 567px;
+    top: 258px;
+    background: #FFFFFF;
+}
+
+.input_name {
+    position: absolute;
+    width: 225px;
+    height: 34px;
+    left: 608px;
+    top: 415px;
+    background: #FCFCFC;
+    border: 2px solid #D7D7D7;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.input_password {
+    position: absolute;
+    width: 225px;
+    height: 34px;
+    left: 608px;
+    top: 478px;
+    background: #FCFCFC;
+    border: 2px solid #D7D7D7;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.button_login {
+    position: absolute;
+    width: 225px;
+    height: 40px;
+    left: 608px;
+    top: 541px;
+    border: 3px solid #F77545;
+    box-sizing: border-box;
+}
+
+.upper_tab_home {    
+    position: absolute;
+    width: 100%;
+    height: 120px;
+    left: 0px;
+    top: -25px;
+    background: #F77545;
+}
+
+.button_home {
+    position: absolute;
+    width: 81px;
+    height: 35px;
+    left: 65px;
+    top: 31px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+    color: #FFFFFF;
+}
+
+.button_accounts {
+    position: absolute;
+    width: 127px;
+    height: 35px;
+    left: 209px;
+    top: 31px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+    color: #FFFFFF;
+}
+
+.profile_foto {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    left: 1184px;
+    top: 13px;
+}
+
+.button_logOut {
+    position: absolute;
+    width: 120px;
+    height: 35px;
+    left: 1316px;
+    top: 31px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+    color: #FFFFFF;
+}
+
+.account_upper {
+    position: absolute;
+    width: 511px;
+    height: 92px;
+    left: 65px;
+    top: 163px;
+    background: #FAFAFA;
+    box-shadow: 0px 1.5px 4px rgba(0, 0, 0, 0.15);
+}
+
+.account_bottom {
+    position: absolute;
+    width: 511px;
+    height: 154px;
+    left: 65px;
+    top: 242px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.graph_upper {
+    position: absolute;
+    width: 511px;
+    height: 92px;
+    left: 65px;
+    top: 438px;
+    background: #FAFAFA;
+    box-shadow: 0px 1.5px 4px rgba(0, 0, 0, 0.15);
+}
+
+.graph_bottom {   
+    position: absolute;
+    width: 511px;
+    height: 220px;
+    left: 65px;
+    top: 530px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.transaction_upper {
+    position: absolute;
+    width: 641px;
+    height: 80px;
+    left: 608px;
+    top: 163px;
+    background: #FAFAFA;
+    box-shadow: 0px 1.5px 4px rgba(0, 0, 0, 0.25);
+}
+
+.transaction_bottom {
+    position: absolute;
+    width: 641px;
+    height: 507px;
+    left: 608px;
+    top: 243px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
