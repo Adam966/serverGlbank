@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const UIDGenerator = require('uid-generator');
 const uidgen = new UIDGenerator();
@@ -21,7 +22,15 @@ database.authenticate()
     .catch(err => console.log("Error: " + err))
 
 const app = express();
-app.use(bodyParser.json()) 
+app.use(bodyParser.json());
+app.use(cors());
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
+    next();
+}); 
+
 const PORT = 8081;
 
 /////////////////////////////////////// CHECK LOGIN ///////////////////////////////////////
@@ -30,7 +39,7 @@ const checkLogin = (req) => {
 };
 
 /////////////////////////////////////// LOGIN ///////////////////////////////////////
-app.post('/login', (req, res) => {    
+app.post('/login', (req, res) => {   
         client.findAll({
         where: {
             login: req.body.name,
@@ -39,18 +48,18 @@ app.post('/login', (req, res) => {
     })
     .then(client => {
         uidgen.generate()
-        .then(uid => {
-            let obj = new Object();
-            obj.client = client,
-            obj.token = uid
-            res.status(200).send(obj);
-
-            let logIn = new Object();
-            logIn.name = req.body.name,
-            logIn.token = uid,
-            LoggedIn.push(logIn);
-        });
-    })
+            .then(uid => {
+                let obj = new Object();
+                obj.client = client[0].dataValues;
+                obj.token = uid;
+                res.status(200).send(obj);
+        
+                let logIn = new Object();
+                logIn.name = req.body.name;
+                logIn.token = uid;
+                LoggedIn.push(logIn);
+            })
+        })
     .catch(err => console.log(err));
 });
 
@@ -65,14 +74,14 @@ app.post('/logout', (req, res) => {
 });
 
 /////////////////////////////////////// ACCOUNTS ///////////////////////////////////////
-app.get('/accounts', (req, res) => {    
+app.post('/accounts', (req, res) => {    
     account.findAll({
     where: {
         idclient: req.body.id,
     },
 })
 .then(account => {
-    LoggedIn.forEach(({name, token}) => console.dir(name + ' ' + token))
+    //LoggedIn.forEach(({name, token}) => console.dir(name + ' ' + token))
     res.status(200).send(account);
 })
 .catch(err => console.log(err));
