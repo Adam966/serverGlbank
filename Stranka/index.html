@@ -7,12 +7,14 @@
     <title>Gl Bank</title>
     <script src="app.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </head>
 <body>
     <div class="upper_tab"></div>
     <div class="upper_login_tab"><p class="title_home">GL BANK</p></div> 
-    <input class="input_name" type="text" placeholder="Name: ">
-    <input class="input_password" type="password" title="Password: " placeholder="Password: ">
-    <button class="button_login">Submit</button>
+    <input class="input_name" type="text" placeholder="Name: " id="name">
+    <input class="input_password" type="password" title="Password: " placeholder="Password: " id="password">
+    <button class="button_login" id="submitLogin" onclick="login()">Submit</button>
+    <p id="errorLogin"></p>
 </body>
 </html>

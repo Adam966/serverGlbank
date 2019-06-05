@@ -5,55 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gl Bank</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="app.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <div class="upper_tab_home">
         <!-- <p class="button_home">Home</p> -->
-        <p class="button_accounts">Accounts</p>
-        <p class="button_cards">Cards</p>
-        <div class="profile_foto"></div>
-        <p class="button_logOut">Log Out</p>
+        <button class="button">Accounts</button>
+        <button class="button">Cards</button>
+        <!-- <div class="profile_foto"></div> -->
+        <button class="button">Log Out</button>
     </div>
-    
-    <div class="account_upper">
-        <p class="title">Account Name: </p>
-        <div style="display: flex; align-items: center;">
-            <p class="title">Account Number: </p>
-            <input style="margin-left: 20px; margin-top: -10px; border-radius: 5px;    " name="color" id="color" list="colors"> 
-            <datalist id="colors"> 
-                <option>Red</option> 
-                <option>Yellow</option> 
-                <option>Blue</option> 
-                <option>Green</option> 
-                <option>Orange</option> 
-                <option>Purple</option> 
-                <option>Black</option> 
-                <option>White</option> 
-                <option>Gray</option> 
-            </datalist>
-        </div>
+            <div style="background-color: grey">    
+                <div class="account_upper">
+                    <p class="title" id="name">Account Owner: </p>
+                    <div style="display: flex; align-items: center;">
+                        <p class="title">Account Number: </p>
+                        <select id="accounts" style="margin-left: 20px; margin-top: -10px; border-radius: 5px; width: 110px" name="color" id="color" onchange="getAccInfo()">
+                            <option value=""></option>
+                        </select> 
+                    </div>
+                </div>
+                <div class="account_bottom">
+                    <p class="title">Current Balance: </p>
+                    <p class="balance" id="money">0 €</p>
+                    <button transparent class="button_payment">Payment</button>
+                </div>
+                <div class="graph_upper">
+                    <p class="title">Income</p>
+                    <p class="title">Expense</p>
+                </div>
+                <div class="graph_bottom"></div>
+                <div class="transaction_upper">
+                    <p class="title_transaction">Transaction:</p>
+                </div>
+                <div class="transaction_bottom" id="transBottom">
+                </div>
     </div>
-    <div class="account_bottom">
-        <p class="title">Current Balance: </p>
-        <p class="balance" id="">45 674 €</p>
-        <button transparent class="button_payment">Payment</button>
-    </div>
-    <div class="graph_upper">
-        <p class="title">Income</p>
-        <p class="title">Expense</p>
-    </div>
-    <div class="graph_bottom"></div>
-    <div class="transaction_upper">
-        <p class="title_transaction">Transaction:</p>
-    </div>
-    <div class="transaction_bottom">
-        <div class="transaction">
-            <p style="margin-left: 50px;">ID:</p>
-            <p style="margin-left: 7em;">Recipient:</p>
-            <p style="margin-left: 12em;">€ - 229</p>
-        </div>
-    </div>
+   
 </body>
 </html>
