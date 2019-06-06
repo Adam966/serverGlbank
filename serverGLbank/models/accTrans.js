@@ -10,6 +10,9 @@ const accTrans = database.define('transaction', {
     },
     recaccount: {
         type: sequelize.STRING
+    },
+    type: {
+        type: sequelize.INTEGER
     }
 })
 

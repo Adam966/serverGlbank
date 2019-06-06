@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gl Bank</title>
-    <script src="app.js"></script>
+    <!-- <script src="app.js"></script> -->
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </head>
@@ -17,4 +17,37 @@
     <button class="button_login" id="submitLogin" onclick="login()">Submit</button>
     <p id="errorLogin"></p>
 </body>
+<script>
+    /////////////////////////////////////// GET LOGIN ///////////////////////////////////////
+    const login = () => {   
+        if($('#name').val() || $('#password').val() != "") {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "http://localhost:8081/login",
+                data: JSON.stringify({name: $('#name').val(), password: $('#password').val()}),
+                success: (result) => {
+                    localStorage.setItem('login', JSON.stringify(result));  
+                    location.href = "home.html";
+                },
+                error: (xhr) => { 
+                    console.log(xhr.status);
+                        
+                    if(xhr.status == 403){
+                        error.empty();
+                        $("#errorLogin").append("Error login account not found.");
+                    }
+        
+                    if(xhr.status == 401){
+                        error.empty();
+                        $("#errorLogin").append("Error bad login");
+                    }
+                }	
+            });
+        }
+        else {
+            $("#errorLogin").append("You must type password and name.");
+        }
+    }
+</script>
 </html>

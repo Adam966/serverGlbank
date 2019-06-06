@@ -6,16 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gl Bank</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
     <script src="app.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body>
+<body id="document">
     <div class="upper_tab_home">
         <!-- <p class="button_home">Home</p> -->
         <button class="button">Accounts</button>
         <button class="button">Cards</button>
         <!-- <div class="profile_foto"></div> -->
-        <button class="button">Log Out</button>
+        <button class="button" onclick="logout()">Log Out</button>
     </div>
             <div style="background-color: grey">    
                 <div class="account_upper">
@@ -32,11 +33,13 @@
                     <p class="balance" id="money">0 €</p>
                     <button transparent class="button_payment">Payment</button>
                 </div>
-                <div class="graph_upper">
+<!--                 <div class="graph_upper">
                     <p class="title">Income</p>
                     <p class="title">Expense</p>
+                </div> -->
+                <div class="graph_bottom">
+                    <canvas id="expenses" width="500" height="312"></canvas>
                 </div>
-                <div class="graph_bottom"></div>
                 <div class="transaction_upper">
                     <p class="title_transaction">Transaction:</p>
                 </div>
