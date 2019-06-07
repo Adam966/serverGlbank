@@ -23,16 +23,6 @@ const getAccounts = () => {
         },
         error: (xhr) => { 
             console.log(xhr.status);
-                    
-            if(xhr.status == 403){
-                error.empty();
-                $("#errorLogin").append("Error login account not found.");
-            }
-    
-            if(xhr.status == 401){
-                error.empty();
-                $("#errorLogin").append("Error bad login");
-            }
         }	
     });
 }
@@ -51,22 +41,12 @@ const getAccInfo = () => {
         },
         error: (xhr) => { 
             console.log(xhr.status);
-                    
-            if(xhr.status == 403){
-                error.empty();
-                $("#errorLogin").append("Error login account not found.");
-            }
-    
-            if(xhr.status == 401){
-                error.empty();
-                $("#errorLogin").append("Error bad login");
-            }
         }	
     });
     getTransHistory();
 }
 
-/////////////////////////////////////// ACCOUNT INFO ///////////////////////////////////////
+/////////////////////////////////////// TRANS INFO ///////////////////////////////////////
 const getTransHistory = () => {
     $.ajax({
         type: "POST",
@@ -81,19 +61,35 @@ const getTransHistory = () => {
         },
         error: (xhr) => { 
             console.log(xhr.status);
-                    
-            if(xhr.status == 403){
-                error.empty();
-                $("#errorLogin").append("Error login account not found.");
-            }
-    
-            if(xhr.status == 401){
-                error.empty();
-                $("#errorLogin").append("Error bad login");
-            }
         }	
     });
 }
+
+/////////////////////////////////////// GET CARDS ///////////////////////////////////////
+const getCards = () => {
+    if($('#accounts option:selected').attr('id') == null) {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "http://localhost:8081/cards",
+            data: JSON.stringify({
+                accID: $('#accounts option:selected').attr('id')
+            }),
+            success: (result) => {  
+                console.log(result);
+                
+                $.each(result, (i, item) => {
+                    $("#cards").append($("<option>").attr({'value': item.cardnum, 'id': item.id}).text(item.cardnum));
+                });
+            },
+            error: (xhr) => { 
+                console.log(xhr.status);
+            }	
+        });
+    } else {
+        $("#account_bottom").append("<p>choose acc num</p>");
+    }
+}   
 
 const getUser = () => {
     return JSON.parse(localStorage.getItem('login'));
@@ -113,7 +109,10 @@ const renderTransaction = (result) => {
         $('#transBottom').append("<div class='transaction' id='transaction"+ item.id +"' class='transaction'></div>");
         $('#transaction' + item.id).append("<p style='margin-left: 30px';>" + index + "</p>");
         $('#transaction' + item.id).append("<p style='margin-left: 10em';>" + item.recaccount + "</p>");
-        $('#transaction' + item.id).append("<p style='margin-left: 10em';>" + item.transamount + ' €' + "</p>");
+        if(item.type == 1)
+            $('#transaction' + item.id).append("<p style='margin-left: 9em';>" + '- ' + item.transamount + ' €' + "</p>");
+        else
+            $('#transaction' + item.id).append("<p style='margin-left: 9em';>" + '+ ' + item.transamount + ' €' + "</p>");
       });
     console.log(result);
 }
@@ -126,15 +125,18 @@ const renderChart = (result) => {
             labels: [],
             datasets: [{
                 label: "Expenese", 
-                backgroundColor: "rgb(229, 18, 28)",
+                fill: false,
+                borderColor: 'red',
                 data: []
             },{
                 label: "Income", 
-                backgroundColor: "rgb(37, 206, 18)",
+                fill: false,
+                borderColor: 'green',
                 data: []
             }]
         },
         options: {
+            
             scales: {
                 yAxes: [{
                     ticks: {
@@ -149,11 +151,19 @@ const renderChart = (result) => {
         if(item.type == 1) {
             expenses.data.labels.push(item.transdate);
             expenses.data.datasets[0].data.push(item.transamount);
-        } /* else {
+        } else {
             expenses.data.labels.push(item.transdate);
             expenses.data.datasets[1].data.push(item.transamount);
-        } */
+        } 
     })
     
     expenses.update();
 } 
+
+const renderCards = () => {
+    $('.account_bottom').empty();
+    $('.account_bottom').append("<p class='title' >Card Number: </p>");
+    $('.account_bottom').append("<select id='cards' style='margin-left: 30px; margin-top: -10px; border-radius: 5px; width: 110px' onchange='getCardInfo()'><option value=''></option></select> ");
+    
+    getCards();
+}
