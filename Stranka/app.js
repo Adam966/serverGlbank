@@ -4,9 +4,6 @@ $('#document').ready(() => {
     $("#name").append((getUser().client.login).charAt(0).toUpperCase() + (getUser().client.login).slice(1));
 })
 
-
-
-
 /////////////////////////////////////// GET ACCOUNTS ///////////////////////////////////////
 const getAccounts = () => {
     $.ajax({
@@ -167,3 +164,10 @@ const renderCards = () => {
     
     getCards();
 }
+
+const renderAccounts = () => {
+    $('.account_upper').empty();
+    $('.account_upper').append("<p class='title' id='name'>Account Owner:</p>");
+    $('.account_upper').append("<p class='title' id='name'>Account Owner:</p>");
+}
+

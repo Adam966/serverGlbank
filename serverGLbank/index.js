@@ -15,7 +15,7 @@ const cards = require('./models/cards');
 const cardInfo = require('./models/cardInfo');
 const cardTrans = require('./models/cardTrans');
 
-let LoggedIn = new Array();
+
 
 database.authenticate()
     .then(() => console.log("Database started."))
@@ -33,9 +33,15 @@ app.use((req, res, next) => {
 
 const PORT = 8081;
 
+let LoggedIn = new Array();
 /////////////////////////////////////// CHECK LOGIN ///////////////////////////////////////
-const checkLogin = (req) => {
-    LoggedIn.forEach(({name, token}) => console.log(type + ' ' + token))
+const checkLogin = (obj) => {
+    LoggedIn.map((item) => {
+        if(item.token == obj.token)
+            return true;
+        else
+            return false;
+    })
 };
 
 /////////////////////////////////////// LOGIN ///////////////////////////////////////
@@ -59,32 +65,33 @@ app.post('/login', (req, res) => {
                 logIn.token = uid;
                 LoggedIn.push(logIn);
             })
-        })
+    })
     .catch(err => console.log(err));
-});
+});               ;
 
 ///////////////////////////////////// LOG OUT ///////////////////////////////////////
 app.post('/logout', (req, res) => { 
-    LoggedIn.forEach((client) => {
+    LoggedIn.map((client, index) => {
         if(client.token == req.body.token) {
-            LoggedIn.filter(client);
-        }
-    });
-    res.status(200).send("Log out");
+            LoggedIn.splice(index, 1);
+            res.status(200).send("Log out");
+        }          
+    }); 
 });
 
 /////////////////////////////////////// ACCOUNTS ///////////////////////////////////////
-app.post('/accounts', (req, res) => {    
-    account.findAll({
-    where: {
-        idclient: req.body.id,
-    },
-})
-.then(account => {
-    //LoggedIn.forEach(({name, token}) => console.dir(name + ' ' + token))
-    res.status(200).send(account);
-})
-.catch(err => console.log(err));
+app.post('/accounts', (req, res) => { 
+    if(checkLogin(req.body.token)) {
+        account.findAll({
+            where: {
+                idclient: req.body.id,
+            },
+            })
+            .then(account => {
+                res.status(200).send(account);
+            })
+            .catch(err => console.log(err));
+    }
 });
 
 /////////////////////////////////////// ACCINFO ///////////////////////////////////////

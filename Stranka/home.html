@@ -10,33 +10,44 @@
     <script src="app.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body id="document">
-    <div class="upper_tab_home">
-        <!-- <p class="button_home">Home</p> -->
-        <button class="button">Accounts</button>
-        <button class="button" onclick="renderCards()">Cards</button>
-        <!-- <div class="profile_foto"></div> -->
-        <button class="button" onclick="logout()">Log Out</button>
-    </div>
+    <body id="document">
+        <div class="upper_tab_home">
+            <!-- <p class="button_home">Home</p> -->
+            <button class="button" onclick="$('.hideCards').hide(); $('.hideAccounts').show();">Accounts</button>
+            <button class="button" onclick="$('.hideAccounts').show(); $('.hideCards').hide();">Cards</button>
+            <!-- <div class="profile_foto"></div> -->
+            <button class="button" onclick="logout()">Log Out</button>
+        </div>
             <div style="background-color: grey">    
                 <div class="account_upper">
-                    <p class="title" id="name">Account Owner: </p>
-                    <div style="display: flex; align-items: center;">
+                    <div class="hideAccounts">
+                        <p class="title" id="name">Account Owner: </p>
+                        <div style="display: flex; align-items: center;">
+                            <p class="title">Account Number: </p>
+                            <select id="accounts" style="margin-left: 20px; margin-top: -10px; border-radius: 5px; width: 110px" name="color" id="color" onchange="getAccInfo()">
+                                <option value=""></option>
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="account_upper">
+                    <div class="hideCards">
                         <p class="title">Account Number: </p>
                         <select id="accounts" style="margin-left: 20px; margin-top: -10px; border-radius: 5px; width: 110px" name="color" id="color" onchange="getAccInfo()">
                             <option value=""></option>
                         </select> 
+                        <p class="title">Card Number: </p>
+                        <select id="cards" style="margin-left: 20px; margin-top: -10px; border-radius: 5px; width: 110px" name="color" id="color">
+                            <option value=""></option>
+                        </select> 
                     </div>
                 </div>
+                </div>
+            </div>
                 <div class="account_bottom">
                     <p class="title">Current Balance: </p>
                     <p class="balance" id="money">0 €</p>
                     <button transparent class="button_payment">Payment</button>
                 </div>
-<!--            <div class="graph_upper">
-                    <p class="title">Income</p>
-                    <p class="title">Expense</p>
-                </div> -->
                 <div class="graph_bottom">
                     <canvas id="expenses" width="500" height="312"></canvas>
                 </div>
@@ -45,7 +56,6 @@
                 </div>
                 <div class="transaction_bottom" id="transBottom">
                 </div>
-    </div>
-   
-</body>
+        </div>
+    </body>
 </html>
