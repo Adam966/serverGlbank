@@ -13,8 +13,8 @@
     <body id="document">
         <div class="upper_tab_home">
             <!-- <p class="button_home">Home</p> -->
-            <button class="button" onclick="$('.hideCards').hide(); $('.hideAccounts').show();">Accounts</button>
-            <button class="button" onclick="$('.hideAccounts').show(); $('.hideCards').hide();">Cards</button>
+            <button class="button" onclick="renderAccounts()">Accounts</button>
+            <button class="button" onclick="renderCards()">Cards</button>
             <!-- <div class="profile_foto"></div> -->
             <button class="button" onclick="logout()">Log Out</button>
         </div>
@@ -29,18 +29,18 @@
                             </select> 
                         </div>
                     </div>
-                    <div class="account_upper">
-                    <div class="hideCards">
-                        <p class="title">Account Number: </p>
-                        <select id="accounts" style="margin-left: 20px; margin-top: -10px; border-radius: 5px; width: 110px" name="color" id="color" onchange="getAccInfo()">
-                            <option value=""></option>
-                        </select> 
-                        <p class="title">Card Number: </p>
-                        <select id="cards" style="margin-left: 20px; margin-top: -10px; border-radius: 5px; width: 110px" name="color" id="color">
-                            <option value=""></option>
-                        </select> 
+                    <div class="hideCards" style="display: none">
+                        <div style="display: flex; align-items: center;">
+                            <p class="title">Account Number: </p>
+                            <select id="accountCard" style="padding-left: 5px; margin-top: -10px; border-radius: 5px; width: 110px" name="color" id="color" onchange="getCards()">
+                                <option value=""></option>
+                            </select> 
+                            <p class="title">Card Number: </p>
+                            <select id="cards" style="padding-left: 5px; margin-top: -10px; border-radius: 5px; width: 110px" name="color" id="color">
+                                <option value=""></option>
+                            </select> 
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
                 <div class="account_bottom">

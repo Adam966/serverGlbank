@@ -36,12 +36,13 @@ const PORT = 8081;
 let LoggedIn = new Array();
 /////////////////////////////////////// CHECK LOGIN ///////////////////////////////////////
 const checkLogin = (obj) => {
-    LoggedIn.map((item) => {
-        if(item.token == obj.token)
+    LoggedIn.forEach((item) => {
+        if(item.token === obj)
             return true;
         else
-            return false;
+            return false
     })
+
 };
 
 /////////////////////////////////////// LOGIN ///////////////////////////////////////
@@ -56,7 +57,7 @@ app.post('/login', (req, res) => {
         uidgen.generate()
             .then(uid => {
                 let obj = new Object();
-                obj.client = client[0].dataValues;
+                obj.client = client[0];
                 obj.token = uid;
                 res.status(200).send(obj);
         
@@ -67,7 +68,7 @@ app.post('/login', (req, res) => {
             })
     })
     .catch(err => console.log(err));
-});               ;
+});               
 
 ///////////////////////////////////// LOG OUT ///////////////////////////////////////
 app.post('/logout', (req, res) => { 
@@ -81,7 +82,7 @@ app.post('/logout', (req, res) => {
 
 /////////////////////////////////////// ACCOUNTS ///////////////////////////////////////
 app.post('/accounts', (req, res) => { 
-    if(checkLogin(req.body.token)) {
+    // if(checkLogin(req.body.token)) {
         account.findAll({
             where: {
                 idclient: req.body.id,
@@ -91,7 +92,9 @@ app.post('/accounts', (req, res) => {
                 res.status(200).send(account);
             })
             .catch(err => console.log(err));
-    }
+/*     } else {
+        res.status(403).send("Not valid token");
+    } */
 });
 
 /////////////////////////////////////// ACCINFO ///////////////////////////////////////

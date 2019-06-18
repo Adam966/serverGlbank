@@ -4,6 +4,27 @@ $('#document').ready(() => {
     $("#name").append((getUser().client.login).charAt(0).toUpperCase() + (getUser().client.login).slice(1));
 })
 
+////////////////////////////////////// BUTTONS ////////////////////////////////////////
+const renderCards = () => {
+    $('.hideCards').show(); 
+    $('.hideAccounts').hide();
+}
+
+const renderAccounts = () => {
+    $('.hideCards').hide(); 
+    $('.hideAccounts').show();
+}
+
+//////////////////////////////////////// LOGOUT ///////////////////////////////////////
+const getUser = () => {
+    return JSON.parse(localStorage.getItem('login'));
+}
+
+const logout = () => {
+    localStorage.removeItem('login');
+    location.href = "index.html";
+}
+
 /////////////////////////////////////// GET ACCOUNTS ///////////////////////////////////////
 const getAccounts = () => {
     $.ajax({
@@ -15,14 +36,39 @@ const getAccounts = () => {
         }),
         success: (result) => {
             $.each(result, (i, item) => {
+                console.log(result);
+                
                 $("#accounts").append($("<option>").attr({'value': item.accnum, 'id': item.id}).text(item.accnum));
-              });
+                $("#accountCard").append($("<option>").attr({'value': item.accnum, 'id': item.id}).text(item.accnum));
+            });
         },
         error: (xhr) => { 
             console.log(xhr.status);
         }	
     });
 }
+
+/////////////////////////////////////// GET CARDS ///////////////////////////////////////
+const getCards = () => {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "http://localhost:8081/cards",
+            data: JSON.stringify({
+                accID: $('#accountCard option:selected').attr('id')
+            }),
+            success: (result) => {  
+                console.log(result);
+                $("#cards").empty();
+                $.each(result, (i, item) => {
+                    $("#cards").append($("<option>").attr({'value': item.cardnum, 'id': item.id}).text(item.cardnum));
+                });
+            },
+            error: (xhr) => { 
+                console.log(xhr.status);
+            }	
+        });
+}   
 
 /////////////////////////////////////// ACCOUNT INFO ///////////////////////////////////////
 const getAccInfo = () => {
@@ -60,41 +106,6 @@ const getTransHistory = () => {
             console.log(xhr.status);
         }	
     });
-}
-
-/////////////////////////////////////// GET CARDS ///////////////////////////////////////
-const getCards = () => {
-    if($('#accounts option:selected').attr('id') == null) {
-        $.ajax({
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            url: "http://localhost:8081/cards",
-            data: JSON.stringify({
-                accID: $('#accounts option:selected').attr('id')
-            }),
-            success: (result) => {  
-                console.log(result);
-                
-                $.each(result, (i, item) => {
-                    $("#cards").append($("<option>").attr({'value': item.cardnum, 'id': item.id}).text(item.cardnum));
-                });
-            },
-            error: (xhr) => { 
-                console.log(xhr.status);
-            }	
-        });
-    } else {
-        $("#account_bottom").append("<p>choose acc num</p>");
-    }
-}   
-
-const getUser = () => {
-    return JSON.parse(localStorage.getItem('login'));
-}
-
-const logout = () => {
-    localStorage.removeItem('login');
-    location.href = "index.html";
 }
 
 //////////////////////////////////////// RENDER TRANSACTIONS, CHARTS ////////////////////////////////////////
@@ -157,17 +168,4 @@ const renderChart = (result) => {
     expenses.update();
 } 
 
-const renderCards = () => {
-    $('.account_bottom').empty();
-    $('.account_bottom').append("<p class='title' >Card Number: </p>");
-    $('.account_bottom').append("<select id='cards' style='margin-left: 30px; margin-top: -10px; border-radius: 5px; width: 110px' onchange='getCardInfo()'><option value=''></option></select> ");
-    
-    getCards();
-}
-
-const renderAccounts = () => {
-    $('.account_upper').empty();
-    $('.account_upper').append("<p class='title' id='name'>Account Owner:</p>");
-    $('.account_upper').append("<p class='title' id='name'>Account Owner:</p>");
-}
 
