@@ -47,16 +47,24 @@
                     <div class="hideAccounts">
                         <p class="title">Current Balance: </p>
                         <p class="balance" id="money">0 €</p>
-                        <button transparent class="button_payment">Payment</button>
+                        <button transparent class="button_payment" style="display: inline-block;" onclick="payment()">Payment</button>
+                        <div class="title" style="margin-top: -80px; margin-left: 20px">
+                            <p  style="display: inline-block;">Reciever account:</p>
+                            <input type="number" id="recacc" style="display: inline-block; width: 80px;">
+                        </div>
+                        <div style="margin-top: -35px;">
+                            <p class="title" style=" display: inline-block;">Amount:</p>
+                            <input type="number" id="amount" style="display: inline-block; width: 60px;">
+                        </div>
                     </div>
                     <div class="hideCards" style="display: none">
                         <p class="title">Date: </p>
-                        <p id="date"></p>
-                        <div style="margin-top: 70px">
+                        <p id="date" class="date"></p>
+                        <div style="margin-top: 40px">
                             <p class="title">Status: </p>
-                            <p id="status"></p>
-                            <button transparent class="button_payment">Block Card</button>
+                            <p id="status" class="date"></p>
                         </div>
+                        <button transparent class="button_payment" onclick="blockCard()">Block Card</button>
                     </div>
                 </div>
             <div class="graph_bottom">

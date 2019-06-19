@@ -6,12 +6,15 @@ const accTrans = database.define('transaction', {
         type: sequelize.FLOAT
     },
     transdate: {
-        type: sequelize.STRING
+        type: sequelize.DATE
     },
     recaccount: {
         type: sequelize.STRING
     },
     type: {
+        type: sequelize.INTEGER
+    },
+    idaccount: {
         type: sequelize.INTEGER
     }
 })

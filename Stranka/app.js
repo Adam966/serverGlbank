@@ -80,12 +80,72 @@ const getCardInfo = () => {
         }),
         success: (result) => {  
             console.log(result);
+            $('#date').text(result[0].expirey + '/' + result[0].expirem);
+            if(result[0].active == 1)
+                $('#status').text('active');
+            else 
+                $('#status').text('unactive');
         },
         error: (xhr) => { 
             console.log(xhr.status);
         }	
     });
 }   
+
+//////////////////////////////////////// PAYMENT ///////////////////////////////////////////
+const payment = () => {
+    console.log($('#amount').val());
+    console.log(parseFloat($('#money').text()));
+    
+    if($('#amount').val() < parseFloat($('#money').text())) {
+        let d = new Date();
+        let datestring = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + 1
+        $.ajax({
+            type: "PUT",
+            contentType: "application/json; charset=utf-8",
+            url: "http://localhost:8081/trans",
+            data: JSON.stringify({
+                transamount: $('#amount').val(),
+                transdate: datestring,
+                recaccount: $('#recacc').val(),
+                type: 1,
+                idaccount: $('#accounts option:selected').attr('id'),
+                balance: parseFloat($('#money').text()) - $('#amount').val()
+            }),
+            success: (result) => {  
+                console.log(result);
+                getTransHistory();
+                getAccInfo();
+            },
+            error: (xhr) => { 
+                console.log(xhr.status);
+            }	
+        });
+    } else {
+        alert('You dont have enough money!')
+    }
+
+}
+
+//////////////////////////////////////// BLOCK CARD ////////////////////////////////////////
+const blockCard = () => {
+    $.ajax({
+        type: "PUT",
+        contentType: "application/json; charset=utf-8",
+        url: "http://localhost:8081/block",
+        data: JSON.stringify({
+            cardnum: $('#cards option:selected').attr('value'),
+            status: 0
+        }),
+        success: (result) => {  
+            console.log(result);
+            getCardInfo();
+        },
+        error: (xhr) => { 
+            console.log(xhr.status);
+        }	
+    });
+}
 
 /////////////////////////////////////// ACCOUNT INFO ///////////////////////////////////////
 const getAccInfo = () => {
@@ -98,7 +158,7 @@ const getAccInfo = () => {
         }),
         success: (result) => {
             $('#money').text(result[0].amount + ' €');
-        },
+         },
         error: (xhr) => { 
             console.log(xhr.status);
         }	

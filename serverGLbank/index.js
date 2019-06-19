@@ -162,4 +162,41 @@ app.post('/cardTrans', (req, res) => {
 .catch(err => console.log(err));
 });
 
+//////////////////////////////////// CREATE TRANS ///////////////////////////////////////
+app.put('/trans', (req, res) => {
+    accTrans.create({
+        transamount: req.body.transamount,
+        transdate: req.body.transdate,
+        recaccount: req.body.recaccount,
+        type: req.body.type,
+        idaccount: req.body.idaccount
+    })
+    accInfo.update({
+        amount: req.body.balance
+    },
+    {
+        where: {
+            id: req.body.idaccount
+        }
+    })
+    .then(() => {
+        res.status(200).send('Data are written');
+    })
+});
+
+//////////////////////////////////// BLOCK CARD ///////////////////////////////////////
+app.put('/block', (req, res) => {
+    cardInfo.update({
+        active: req.body.status,
+    }, 
+    {
+        where: {
+            cardnum: req.body.cardnum
+        }
+    })
+    .then(() => {
+        res.status(200).send('Card is blocked')
+    })
+})
+
 app.listen(PORT, console.log('Server started ' + PORT));
