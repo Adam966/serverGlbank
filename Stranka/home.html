@@ -16,7 +16,7 @@
             <button class="button" onclick="renderAccounts()">Accounts</button>
             <button class="button" onclick="renderCards()">Cards</button>
             <!-- <div class="profile_foto"></div> -->
-            <button class="button" onclick="logout()">Log Out</button>
+            <button class="button" onclick="logout()">LogOut</button>
         </div>
             <div style="background-color: grey">    
                 <div class="account_upper">
@@ -36,7 +36,7 @@
                                 <option value=""></option>
                             </select> 
                             <p class="title">Card Number: </p>
-                            <select id="cards" style="padding-left: 5px; margin-top: -10px; border-radius: 5px; width: 110px" name="color" id="color">
+                            <select id="cards" style="padding-left: 5px; margin-top: -10px; border-radius: 5px; width: 110px" name="color" id="color" onchange="getCardInfo()">
                                 <option value=""></option>
                             </select> 
                         </div>
@@ -44,18 +44,28 @@
                 </div>
             </div>
                 <div class="account_bottom">
-                    <p class="title">Current Balance: </p>
-                    <p class="balance" id="money">0 €</p>
-                    <button transparent class="button_payment">Payment</button>
+                    <div class="hideAccounts">
+                        <p class="title">Current Balance: </p>
+                        <p class="balance" id="money">0 €</p>
+                        <button transparent class="button_payment">Payment</button>
+                    </div>
+                    <div class="hideCards" style="display: none">
+                        <p class="title">Date: </p>
+                        <p id="date"></p>
+                        <div style="margin-top: 70px">
+                            <p class="title">Status: </p>
+                            <p id="status"></p>
+                            <button transparent class="button_payment">Block Card</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="graph_bottom">
-                    <canvas id="expenses" width="500" height="312"></canvas>
-                </div>
-                <div class="transaction_upper">
-                    <p class="title_transaction">Transaction:</p>
-                </div>
-                <div class="transaction_bottom" id="transBottom">
-                </div>
-        </div>
+            <div class="graph_bottom">
+                <canvas id="expenses" width="500" height="312"></canvas>
+            </div>
+            <div class="transaction_upper">
+                <p class="title_transaction">Transaction:</p>
+            </div>
+            <div class="transaction_bottom" id="transBottom">
+            </div>
     </body>
 </html>

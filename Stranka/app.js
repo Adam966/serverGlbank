@@ -69,6 +69,23 @@ const getCards = () => {
             }	
         });
 }   
+/////////////////////////////////////// CARD INFO ///////////////////////////////////////
+const getCardInfo = () => {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "http://localhost:8081/cardInfo",
+        data: JSON.stringify({
+            cardNum: $('#cards option:selected').attr('value')
+        }),
+        success: (result) => {  
+            console.log(result);
+        },
+        error: (xhr) => { 
+            console.log(xhr.status);
+        }	
+    });
+}   
 
 /////////////////////////////////////// ACCOUNT INFO ///////////////////////////////////////
 const getAccInfo = () => {

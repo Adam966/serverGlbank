@@ -7,6 +7,9 @@ const cardInfo = database.define('card', {
     },
     expirey: {
         type: sequelize.STRING
+    },
+    active: {
+        type: sequelize.INTEGER
     }
 })
 
