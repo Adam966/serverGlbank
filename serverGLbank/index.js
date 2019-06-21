@@ -36,13 +36,7 @@ const PORT = 8081;
 let LoggedIn = new Array();
 /////////////////////////////////////// CHECK LOGIN ///////////////////////////////////////
 const checkLogin = (obj) => {
-    LoggedIn.forEach((item) => {
-        if(item.token === obj)
-            return true;
-        else
-            return false
-    })
-
+    return LoggedIn.filter(item => item.token == obj);
 };
 
 /////////////////////////////////////// LOGIN ///////////////////////////////////////
@@ -78,125 +72,156 @@ app.post('/logout', (req, res) => {
             res.status(200).send("Log out");
         }          
     }); 
+    console.log(LoggedIn);
 });
 
 /////////////////////////////////////// ACCOUNTS ///////////////////////////////////////
-app.post('/accounts', (req, res) => { 
-    // if(checkLogin(req.body.token)) {
+app.post('/accounts', (req, res) => {
+    if(checkLogin(req.body.token).length != 0) {
         account.findAll({
             where: {
                 idclient: req.body.id,
             },
-            })
-            .then(account => {
+        })
+        .then(account => {
                 res.status(200).send(account);
-            })
-            .catch(err => console.log(err));
-/*     } else {
+        })
+        .catch(err => console.log(err));
+    } else {
         res.status(403).send("Not valid token");
-    } */
+    } 
 });
 
 /////////////////////////////////////// ACCINFO ///////////////////////////////////////
-app.post('/accInfo', (req, res) => {    
-    accInfo.findAll({
-    where: {
-        AccNum: req.body.accNum
+app.post('/accInfo', (req, res) => {
+    if(checkLogin(req.body.token).length != 0) {    
+        accInfo.findAll({
+        where: {
+            AccNum: req.body.accNum
+        }
+        })
+        .then(accInfo => {
+            res.status(200).send(accInfo);
+        })
+        .catch(err => console.log(err));
+    } else {
+        res.status(403).send("Not valid token");
     }
-})
-.then(accInfo => {
-    res.status(200).send(accInfo);
-})
-.catch(err => console.log(err));
 });
 
 /////////////////////////////////////// TRANS HISTORY ///////////////////////////////////////
-app.post('/transHistory', (req, res) => {    
-    accTrans.findAll({
-    where: {
-        IDAccount: req.body.accID
+app.post('/transHistory', (req, res) => {
+    if(checkLogin(req.body.token).length != 0) {        
+        accTrans.findAll({
+        where: {
+            IDAccount: req.body.accID
+        }
+        })
+        .then(accTrans => {
+            res.status(200).send(accTrans);
+        })
+        .catch(err => console.log(err));
+    } else {
+        res.status(403).send("Not valid token");
     }
-})
-.then(accTrans => {
-    res.status(200).send(accTrans);
-})
-.catch(err => console.log(err));
 });
 
 ///////////////////////////////////// CARDS ///////////////////////////////////////
 app.post('/cards', (req, res) => {    
-    cards.findAll({
-    where: {
-        IDAccount: req.body.accID
+    if(checkLogin(req.body.token).length != 0) { 
+        cards.findAll({
+        where: {
+            IDAccount: req.body.accID
+        }
+        })
+        .then(cards => {
+            res.status(200).send(cards);
+        })
+        .catch(err => console.log(err));
+    } else {
+        res.status(403).send("Not valid token");
     }
-})
-.then(cards => {
-    res.status(200).send(cards);
-})
-.catch(err => console.log(err));
 });
 
 ///////////////////////////////////// CARD INFO ///////////////////////////////////////
-app.post('/cardInfo', (req, res) => {    
-    cardInfo.findAll({
-    where: {
-        cardNum: req.body.cardNum
+app.post('/cardInfo', (req, res) => {  
+    if(checkLogin(req.body.token).length != 0) {  
+        cardInfo.findAll({
+        where: {
+            cardNum: req.body.cardNum
+        }
+        })
+        .then(cardInfo => {
+            res.status(200).send(cardInfo);
+        })
+        .catch(err => console.log(err));
+    } else {
+        res.status(403).send("Not valid token");
     }
-})
-.then(cardInfo => {
-    res.status(200).send(cardInfo);
-})
-.catch(err => console.log(err));
 });
 
 ///////////////////////////////////// CARD TRANS ///////////////////////////////////////
 app.post('/cardTrans', (req, res) => {    
-    cardTrans.findAll({
-    where: {
-        IDCard: req.body.IDCard
+    if(checkLogin(req.body.token).length != 0) {
+        cardTrans.findAll({
+        where: {
+            IDCard: req.body.IDCard
+        }
+        })
+        .then(cardTrans => {
+            res.status(200).send(cardTrans);
+        })
+        .catch(err => console.log(err));
+    } else {
+        res.status(403).send("Not valid token");
     }
-})
-.then(cardTrans => {
-    res.status(200).send(cardTrans);
-})
-.catch(err => console.log(err));
 });
 
 //////////////////////////////////// CREATE TRANS ///////////////////////////////////////
 app.put('/trans', (req, res) => {
-    accTrans.create({
-        transamount: req.body.transamount,
-        transdate: req.body.transdate,
-        recaccount: req.body.recaccount,
-        type: req.body.type,
-        idaccount: req.body.idaccount
-    })
-    accInfo.update({
-        amount: req.body.balance
-    },
-    {
-        where: {
-            id: req.body.idaccount
-        }
-    })
-    .then(() => {
-        res.status(200).send('Data are written');
-    })
+    if(checkLogin(req.body.token).length != 0) {
+        accTrans.create({
+            transamount: req.body.transamount,
+            transdate: req.body.transdate,
+            recaccount: req.body.recaccount,
+            type: req.body.type,
+            idaccount: req.body.idaccount
+        })
+        accInfo.update({
+            amount: req.body.balance
+        },
+        {
+            where: {
+                id: req.body.idaccount
+            }
+        })
+        .then(() => {
+            res.status(200).send('Data are written');
+        })
+        .catch(() => console.log(err));
+    } else {
+        res.status(403).send("Not valid token");
+    }
 });
 
 //////////////////////////////////// BLOCK CARD ///////////////////////////////////////
 app.put('/block', (req, res) => {
-    cardInfo.update({
-        active: req.body.status,
-    }, 
-    {
-        where: {
-            cardnum: req.body.cardnum
-        }
-    })
-    .then(() => {
-        res.status(200).send('Card is blocked')
-    })
+    if(checkLogin(req.body.token).length != 0) {
+        cardInfo.update({
+            active: req.body.status,
+        }, 
+        {
+            where: {
+                cardnum: req.body.cardnum
+            }
+        })
+        .then(() => {
+            res.status(200).send('Card is blocked')
+        })
+        .catch(() => console.log(err));
+    } else {
+        res.status(403).send("Not valid token");
+    }
 })
 
 app.listen(PORT, console.log('Server started ' + PORT));

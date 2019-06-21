@@ -32,7 +32,8 @@ const getAccounts = () => {
         contentType: "application/json; charset=utf-8",
         url: "http://localhost:8081/accounts",
         data: JSON.stringify({
-            token: getUser().token, id: getUser().client.idclient
+            token: getUser().token, 
+            id: getUser().client.idclient
         }),
         success: (result) => {
             $.each(result, (i, item) => {
@@ -55,6 +56,7 @@ const getCards = () => {
             contentType: "application/json; charset=utf-8",
             url: "http://localhost:8081/cards",
             data: JSON.stringify({
+                token: getUser().token,
                 accID: $('#accountCard option:selected').attr('id')
             }),
             success: (result) => {  
@@ -76,6 +78,7 @@ const getCardInfo = () => {
         contentType: "application/json; charset=utf-8",
         url: "http://localhost:8081/cardInfo",
         data: JSON.stringify({
+            token: getUser().token,
             cardNum: $('#cards option:selected').attr('value')
         }),
         success: (result) => {  
@@ -105,6 +108,7 @@ const payment = () => {
             contentType: "application/json; charset=utf-8",
             url: "http://localhost:8081/trans",
             data: JSON.stringify({
+                token: getUser().token,
                 transamount: $('#amount').val(),
                 transdate: datestring,
                 recaccount: $('#recacc').val(),
@@ -134,6 +138,7 @@ const blockCard = () => {
         contentType: "application/json; charset=utf-8",
         url: "http://localhost:8081/block",
         data: JSON.stringify({
+            token: getUser().token,
             cardnum: $('#cards option:selected').attr('value'),
             status: 0
         }),
@@ -154,6 +159,7 @@ const getAccInfo = () => {
         contentType: "application/json; charset=utf-8",
         url: "http://localhost:8081/accInfo",
         data: JSON.stringify({
+            token: getUser().token,
             accNum: $("#accounts option:selected").val()
         }),
         success: (result) => {
@@ -173,6 +179,7 @@ const getTransHistory = () => {
         contentType: "application/json; charset=utf-8",
         url: "http://localhost:8081/transHistory",
         data: JSON.stringify({
+            token: getUser().token,
             accID: $('#accounts option:selected').attr('id')
         }),
         success: (result) => {  
